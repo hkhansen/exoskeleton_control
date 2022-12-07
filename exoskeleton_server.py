@@ -39,17 +39,17 @@ def send_nudge():
 
 # Listen for incoming datagrams
 try:
-    send_nudge_thread = threading.Thread(target=send_nudge,args=())
-    send_nudge_thread.daemon = True
-    send_nudge_thread.start()
+    #send_nudge_thread = threading.Thread(target=send_nudge,args=())
+    #send_nudge_thread.daemon = True
+    #send_nudge_thread.start()
     while(True):
         message = UDPServerSocket.recvfrom(bufferSize)[0]
         decodedMessage = str(message, 'utf-8')
         formattedMessage = "{}\n".format(decodedMessage)
         # Save in a text file
         f.write(formattedMessage)
-        #print(formattedMessage)
-        time.sleep(0.1)
+        print(formattedMessage)
+        time.sleep(0.01)
 
 except KeyboardInterrupt:
     UDPServerSocket.close()
