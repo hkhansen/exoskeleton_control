@@ -4,8 +4,8 @@ from datetime import datetime
 import time
 import threading
 
-SERVER_IP   = "192.168.1.105" 
-EXO_IP      = "192.168.1.104"  
+SERVER_IP   = "192.168.1.104" 
+EXO_IP      = "192.168.1.103"  
 SERVER_PORT = 5013
 EXO_PORT    = 5011
 bufferSize  = 1024

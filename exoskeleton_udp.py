@@ -1,7 +1,4 @@
 #!/usr/bin/env python
-from __future__ import print_function
-from __future__ import division
-
 import time     # import the time library for the sleep function
 from datetime import datetime
 import threading
@@ -35,15 +32,15 @@ sock.sendto(str.encode("from pi"), (SERVER_IP, SERVER_PORT))
 
 def executeNudging(direction: str):
         if direction == "up":
-                target = motor.get_DC_motor_angle() + 90
-                motor.set_DC_motor_position(target)
+                target = 90
+                motor.move_stepper(target)
                 time.sleep(0.5)
 
         elif direction == "down":
-                target = motor.get_DC_motor_angle() - 90
-                motor.set_DC_motor_position(target)
+                target = 0
+                motor.move_stepper(target)
                 time.sleep(0.5)
-
+ 
 def messageCallback(data):
         message = data.decode("utf-8")
 
@@ -63,7 +60,7 @@ def receiveMsg():
                 if (addr[0] == SERVER_IP):
                         messageCallback(data)
 
-ddef main():
+def main():
         try:
                 # Starting a thread which is listening to the UDP messages until the program is closed
                 receiveMsgThread = threading.Thread(target=receiveMsg, args=())
@@ -73,9 +70,9 @@ ddef main():
                 print("Logging motor value and ready to take nudging messages through UDP")
                 while True:
                         timeStamp = datetime.now().strftime('%H:%M:%S.%f')
-                        value_elbow = motor.get_DC_motor_angle()
+                        value_elbow = motor.get_stepper_angle()
                         value_elbow = str(value_elbow)
-                        current = 0.045 #motor.measure_current()
+                        current = motor.measure_current()
                         current = str(current)
                         udp_message = str.encode(f"{value_elbow}, {timeStamp}")
                         print(udp_message)
